@@ -1,0 +1,396 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Material Design for Bootstrap</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" />
+    <!-- Google Fonts Roboto -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/pd.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.css' %}">
+            
+    <link rel="stylesheet" href="{% static 'css/templatemo-hexashop.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/owl-carousel.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/lightbox.css' %}">
+</head>
+<body>
+    <header>
+
+
+        <!-- Right elements -->
+        <div class="col-lg-5 col-md-12 col-12">
+          <div class="input-group float-center">
+          </div>
+        </div>
+        <!-- Right elements -->
+      </div>
+    </div>
+  </div>
+  <!-- Jumbotron -->
+
+  <!-- Heading -->
+  <div class="bg-primary">
+    <div class="container py-4">
+      <!-- Breadcrumb -->
+      <nav class="d-flex">
+        <h6 class="mb-0">
+          <a href="" class="text-white-50">Home</a>
+          <span class="text-white-50 mx-2">  </span>
+          <a href="" class="text-white-50">Library</a>
+          <span class="text-white-50 mx-2"> </span>
+          <a href="" class="text-white"><u>Data</u></a>
+        </h6>
+      </nav>
+      <!-- Breadcrumb -->
+    </div>
+  </div>
+  <!-- Heading -->
+</header>
+
+<!-- content -->
+<section class="py-5">
+  <div class="container">
+    <div class="row gx-5">
+      <aside class="col-lg-6">
+        <div class="border rounded-4 mb-3 d-flex justify-content-center" style="width: 530px; height: 500px; overflow: hidden; margin: auto;">
+              <img class="rounded-4 fit" src="{{details.image.url}}" style="width: 100%; height: 100%; object-fit: cover;" />
+          </a>
+        </div>   
+      <form id="product-form">       
+        <div class="col-md-4 col-6 mb-3">
+          <label class="mb-2">Colors</label>
+          <div class="btn-group" role="group" aria-label="Color selection">
+            {% for colimg in details.colors.all %}
+            <input type="radio" class="btn-check" name="color" id="color-{{ forloop.counter }}" autocomplete="off" value="{{ colimg.id }}">
+            <label class="btn btn-outline-secondary" for="color-{{ forloop.counter }}">
+              <img width="60" height="60" class="rounded-2" src="{{ colimg.image.url }}">
+            </label>
+            {% endfor %}
+          </div>
+        </div>
+      </form>
+        
+      
+        <!-- thumbs-wrap.// -->
+        <!-- gallery-wrap .end// -->
+      </aside>
+      <main class="col-lg-6">
+        <div class="ps-lg-3">
+          <h4 class="title text-dark">
+            {{details.name}}
+          </h4>
+          <div class="d-flex flex-row my-3">
+            <div class="text-warning mb-1 me-2">
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fas fa-star-half-alt"></i>
+              <span class="ms-1">
+                4.5
+              </span>
+            </div>
+            <span class="text-muted"><i class="fas fa-shopping-basket fa-sm mx-1"></i>{{details.sales}} <b>sold</b></span>
+            <span class="text-success ms-2">{% if details.is_in_stock %}(In Stock){% else %}(Out of Stock){% endif %}</span>
+          </div>
+
+          <div class="mb-3">
+            <span class="h5">Price : {{details.price}}</span>
+            <span class="text-muted">/pkr</span>
+          </div>
+
+          <p>
+            {{details.description}}
+          </p>
+          <div class="row">
+            <dt class="col-3">Gender:</dt>
+            <dd class="col-9">{{details.gender}}</dd>
+            
+            <dt class="col-3">Color:</dt>
+            <dd class="col-9">
+              {% for color in details.colors.all %}
+                {{ color.color }}{% if not forloop.last %}, {% endif %}
+              {% endfor %}
+            </dd>
+            
+            <dt class="col-3">Material:</dt>
+            <dd class="col-9">{{details.material}}</dd>
+            
+            <dt class="col-3">Brand:</dt>
+            <dd class="col-9">{{details.brand}}</dd>
+          </div>          
+          
+          <hr />
+          <form id="product-form">
+            <!-- Color Selection -->
+          
+            <!-- Size Selection -->
+            <div class="col-md-4 col-6 mb-3">
+              <label class="mb-2">Size</label>
+              <div class="btn-group" role="group" aria-label="Size selection">
+                {% for size in details.sizes.all %}
+                <input type="radio" class="btn-check" name="size" id="size-{{ forloop.counter }}" autocomplete="off" value="{{ size.id }}">
+                <label class="btn btn-outline-secondary" for="size-{{ forloop.counter }}">{{ size.sizes }}</label>
+                {% endfor %}
+              </div>
+            </div>
+          
+            <!-- Quantity Selection -->
+            <div class="col-md-4 col-6 mb-3">
+              <label class="mb-2 d-block">Quantity</label>
+              <div class="input-group mb-3" style="width: 170px;">
+                <button class="btn btn-white border border-secondary px-3" type="button" id="button-addon1" onclick="decreaseQuantity()">
+                  <i class="fas fa-minus"></i>
+                </button>
+                <input type="text" id="quantity" class="form-control text-center border border-secondary" value="1" aria-label="Quantity input" />
+                <button class="btn btn-white border border-secondary px-3" type="button" id="button-addon2" onclick="increaseQuantity()">
+                  <i class="fas fa-plus"></i>
+                </button>
+              </div>
+            </div>
+        
+          </form>
+          
+          <!-- Modal for Address and Order Details -->
+          <div id="popup-form" style="display:none;">
+            <form id="order-form" method="POST" action="{% url 'save_order' %}">
+              {% csrf_token %}
+
+              <label for="name">Full Name:</label>
+              <input type="text" id="name" name="name" required>
+          
+              <label for="address">Address:</label>
+              <input type="text" id="address" name="address" required>
+          
+              <label for="city">City:</label>
+              <input type="text" id="city" name="city" required>
+
+              <label for="number">Number:</label>
+              <input type="text" id="number" name="number" required>
+          
+              <!-- Hidden Inputs for Size, Color, Quantity, Product ID, and Product Name -->
+              <input type="hidden" id="popup-size" name="size">
+              <input type="hidden" id="popup-color" name="color">
+              <input type="hidden" id="popup-quantity" name="quantity">
+              <input type="hidden" id="popup-product-id" name="product_id" value="{{ details.id }}">
+              <button type="submit" class="btn btn-success">Place Order</button>
+            </form>
+          </div>
+          <a type='button' class="btn btn-warning shadow-0" onclick="openPopup()"> Buy now </a>
+          <a href="#" class="btn btn-primary shadow-0"> <i class="me-1 fa fa-shopping-basket"></i> Add to cart </a>
+          <a href="#" class="btn btn-light border border-secondary py-2 icon-hover px-3"> <i class="me-1 fa fa-heart fa-lg"></i> Save </a>
+        </div>
+      </main>
+    </div>
+  </div>
+</section>
+<!-- content -->
+
+<section class="bg-light border-top py-4">
+  <div class="container">
+    <div class="row gx-4">
+      <div class="col-lg-8 mb-4">
+        <div class="border rounded-2 px-3 py-2 bg-white">
+            <div class="card">
+                <div class="card-body p-4">
+                    <h4 class="text-center mb-4 pb-2">Nested comments section</h4>
+                    <form method="post">
+                        {% csrf_token %} 
+                        {{ reviewform.as_p }}                    
+                        <input type="hidden" name="parent_review" id="parent_review_input" value="">
+                        <button type="submit">Submit</button>
+                    </form>
+                    <div class="row">
+                        <div class="col">
+                            {% for review in reviews %}
+                            <div class="d-flex flex-start">
+                                <img class="rounded-circle shadow-1-strong me-3"
+                                    src="{{ review.user.user_profile.image.url }}" alt="avatar" width="65" height="65" />
+                                <div class="flex-grow-1 flex-shrink-1">
+                                    <div>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <p class="mb-1">
+                                                {{ review.user.username }} 
+                                                <span class="small">- {{ review.created|timesince }} ago</span>
+                                                <span class="ms-2 badge bg-success">{{ review.rating }}★</span>
+                                            </p>
+                                            <a href="#!" class="reply-btn" data-review-id="{{ review.id }}"><i class="fas fa-reply fa-xs"></i><span class="small"> reply</span></a>
+                                        </div>
+                                        <p class="small mb-0">
+                                            {{ review.comment }}
+                                        </p>
+                                    </div>
+    
+                                    {% for reply in review.replies.all %}
+                                    <div class="d-flex flex-start mt-4">
+                                        <img class="rounded-circle shadow-1-strong me-3"
+                                            src="{{ reply.user.user_profile.image.url }}" alt="avatar" width="65" height="65" />
+                                        <div class="flex-grow-1 flex-shrink-1">
+                                            <div>
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <p class="mb-1">
+                                                        {{ reply.user.username }} 
+                                                        <span class="small">- {{ reply.created|timesince }} ago</span>
+                                                    </p>
+                                                </div>
+                                                <p class="small mb-0">
+                                                    {{ reply.comment }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div> <!-- End of col -->
+                </div>
+            </div> <!-- End of card -->
+        </div> <!-- End of border -->
+    </div>
+    
+       <div class="col-lg-4">
+        <div class="px-0 border rounded-2 shadow-0">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Similar items</h5>
+              {% for sim in simp %}
+              <div class="d-flex mb-3">
+                <a href="#" class="me-3">
+                  <img src="{{sim.image.url}}" style="min-width: 96px; height: 96px;" class="img-md img-thumbnail" />
+                </a>
+                <div class="info">
+                  <a href="#" class="nav-link mb-1">
+                    {{sim.name}}
+                  </a>
+                  <strong class="text-dark"> {{sim.price}}</strong>
+                </div>
+              </div>
+              {% endfor %}
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="first-item">
+                    <div class="logo">
+                        <img src="{% static 'images/white-logo.png'%}" alt="hexashop ecommerce templatemo">
+                    </div>
+                    <ul>
+                        <li><a href="#">16501 Collins Ave, Sunny Isles Beach, FL 33160, United States</a></li>
+                        <li><a href="#">hexashop@company.com</a></li>
+                        <li><a href="#">010-020-0340</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <h4>Shopping &amp; Categories</h4>
+                <ul>
+                    <li><a href="{% url "product" %}">Men’s Shopping</a></li>
+                    <li><a href="{% url "product" %}">Women’s Shopping</a></li>
+                    <li><a href="{% url "product" %}">Kid's Shopping</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-3">
+                <h4>Useful Links</h4>
+                <ul>
+                    <li><a href="#">Homepage</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Help</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-3">
+                <h4>Help &amp; Information</h4>
+                <ul>
+                    <li><a href="#">Help</a></li>
+                    <li><a href="#">FAQ's</a></li>
+                    <li><a href="#">Shipping</a></li>
+                    <li><a href="#">Tracking ID</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-12">
+                <div class="under-footer">
+                    <p>Copyright © 2022 HexaShop Co., Ltd. All Rights Reserved. 
+                    
+                    <br>Design: <a href="https://templatemo.com" target="_parent" title="free css templates">TemplateMo</a></p>
+                    <ul>
+                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                        <li><a href="#"><i class="fa fa-behance"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <!-- MDB -->
+    <script src="{% static 'js/custom.js' %}"></script>
+    
+    <script type="text/javascript" src="{% static 'js/pd.js' %}"></script>
+
+    <script>
+      document.querySelectorAll('.reply-btn').forEach(function(button) {
+        button.addEventListener('click', function() {
+            const reviewId = this.getAttribute('data-review-id');
+            document.querySelector('#parent_review_input').value = reviewId;
+          });
+      });
+    
+    </script>
+    
+    <script>
+      // JavaScript to handle quantity increment and decrement
+      function increaseQuantity() {
+          var quantityInput = document.getElementById('quantity');
+          var currentValue = parseInt(quantityInput.value);
+          if (!isNaN(currentValue)) {
+              quantityInput.value = currentValue + 1;
+          }
+      }
+    
+      function decreaseQuantity() {
+          var quantityInput = document.getElementById('quantity');
+          var currentValue = parseInt(quantityInput.value);
+          if (!isNaN(currentValue) && currentValue > 1) {
+              quantityInput.value = currentValue - 1;
+          }
+      }
+    
+      // Function to open the modal popup and save the selected values
+      function openPopup() {
+        var selectedSize = document.querySelector('input[name="size"]:checked').value;
+        var selectedColor = document.querySelector('input[name="color"]:checked').value;
+        var selectedQuantity = document.getElementById('quantity').value;
+    
+        // Set the selected values in the hidden inputs of the popup form
+        document.getElementById('popup-size').value = selectedSize;
+        document.getElementById('popup-color').value = selectedColor;
+        document.getElementById('popup-quantity').value = selectedQuantity;
+    
+        // Show the popup form
+        document.getElementById('popup-form').style.display = 'block';
+      }
+    </script>
+  
+</body>
+</html>
+
